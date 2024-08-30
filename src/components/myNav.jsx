@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Container, Form, Navbar, Offcanvas } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
@@ -6,7 +6,16 @@ import "../App.css";
 
 function NavbarMeteo({ onCityChange }) {
   const [city, setCity] = useState("");
+  const [dateTime, setDateTime] = useState(new Date());
   const location = useLocation();
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDateTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const handleCityChange = (event) => {
     setCity(event.target.value);
@@ -18,6 +27,19 @@ function NavbarMeteo({ onCityChange }) {
   };
 
   const isDetailsPage = location.pathname.includes("/details");
+
+  const formatDateTime = (date) => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    return date.toLocaleDateString("it-IT", options);
+  };
 
   return (
     <Navbar variant="dark" className="fixed-top">
@@ -32,6 +54,7 @@ function NavbarMeteo({ onCityChange }) {
           />
           Meteo
         </Navbar.Brand>
+        <Navbar.Text className="mx-auto navbar-text rounded-border">{formatDateTime(dateTime)}</Navbar.Text>
         {!isDetailsPage && (
           <>
             <Navbar.Toggle aria-controls="offcanvasNavbar" />
