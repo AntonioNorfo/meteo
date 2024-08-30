@@ -2,67 +2,20 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.navbar-custom {
-  background-color: transparent !important;
-}
-
-.navbar-brand img {
-  width: 50px;
-  height: 50px;
-}
-
-.navbar-brand {
-  display: flex;
-  align-items: center;
-}
-
-.navbar-brand span {
-  margin-left: 10px;
-  color: white;
-}
-.home-background {
-  background-image: url("https://placedog.net/1000/800");
-  background-size: cover;
-  background-position: center;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-image: url("https://www.unisr.it/mediaObject/unisr/imported/news-ricerca/uploads/2017/01/immagine-copertina/original/immagine-copertina.jpg");
 }
 
 .text-white {
@@ -76,10 +29,50 @@
 .temperature-display {
   font-size: 3rem;
   font-weight: bold;
-  margin-top: 20px;
 }
 
 .header-text {
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.mt-5 {
+  margin-top: 3rem !important;
+}
+
+.navbar-brand img {
+  margin-right: 10px;
+}
+
+.navbar-form {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-form input,
+.navbar-form button {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.navbar-form input {
+  flex: 1;
+}
+
+.autosuggest-container {
+  position: absolute;
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.autosuggest-suggestion {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.autosuggest-suggestion:hover {
+  background-color: #f0f0f0;
 }

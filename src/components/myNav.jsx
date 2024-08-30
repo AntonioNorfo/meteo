@@ -1,17 +1,58 @@
-import React from "react";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Navbar from "react-bootstrap/Navbar";
-import Offcanvas from "react-bootstrap/Offcanvas";
-import Nav from "react-bootstrap/Nav";
+import React, { useState } from "react";
+import { Button, Container, Form, Navbar, Offcanvas } from "react-bootstrap";
+import Autosuggest from "react-autosuggest";
+import { FaSearch } from "react-icons/fa";
 import "../App.css";
 
-function NavbarMeteo() {
+const API_KEY = "9c04de7779eb520cd5b30ad8cfb6a558";
+
+function NavbarMeteo({ onCityChange }) {
+  const [city, setCity] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+
+  const handleCityChange = (event, { newValue }) => {
+    setCity(newValue);
+  };
+
+  const handleSearch = () => {
+    onCityChange(city);
+  };
+
+  const onSuggestionsFetchRequested = ({ value }) => {
+    if (value.length < 3) {
+      setSuggestions([]);
+      return;
+    }
+
+    fetch(
+      `https://api.openweathermap.org/data/2.5/find?q=${value.toLowerCase()}&type=like&sort=population&cnt=5&appid=${API_KEY}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const cities = data.list.map((item) => ({
+          name: item.name,
+          country: item.sys.country,
+        }));
+        setSuggestions(cities);
+      });
+  };
+
+  const onSuggestionsClearRequested = () => {
+    setSuggestions([]);
+  };
+
+  const getSuggestionValue = (suggestion) => `${suggestion.name}, ${suggestion.country}`;
+
+  const renderSuggestion = (suggestion) => (
+    <div>
+      {suggestion.name}, {suggestion.country}
+    </div>
+  );
+
   return (
-    <Navbar fixed="top">
+    <Navbar bg="dark" variant="dark" expand={false}>
       <Container fluid>
-        <Navbar.Brand href="#" className="d-flex align-items-center">
+        <Navbar.Brand href="/">
           <img
             src="https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Weather-1024.png"
             alt="Weather Icon"
@@ -19,19 +60,29 @@ function NavbarMeteo() {
             height="50"
             className="d-inline-block align-top"
           />
+          Meteo
         </Navbar.Brand>
-        <Navbar.Offcanvas
-          id="offcanvasDarkNavbar"
-          aria-labelledby="offcanvasDarkNavbarLabel"
-          placement="end"
-          className="bg-dark text-bg-dark"
-        >
+        <Navbar.Toggle aria-controls="offcanvasNavbar" />
+        <Navbar.Offcanvas id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" placement="end">
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title id="offcanvasNavbarLabel">Cerca città</Offcanvas.Title>
+          </Offcanvas.Header>
           <Offcanvas.Body>
-            <Nav className="justify-content-end flex-grow-1 pe-3"></Nav>
-            <Form className="d-flex mt-3" role="search">
-              <Form.Control type="search" placeholder="Scrivi la città" className="me-2" aria-label="Search" />
-              <Button variant="secondary" type="submit">
-                Search
+            <Form className="d-flex navbar-form">
+              <Autosuggest
+                suggestions={suggestions}
+                onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={onSuggestionsClearRequested}
+                getSuggestionValue={getSuggestionValue}
+                renderSuggestion={renderSuggestion}
+                inputProps={{
+                  placeholder: "Cerca",
+                  value: city,
+                  onChange: handleCityChange,
+                }}
+              />
+              <Button variant="outline-success" onClick={handleSearch}>
+                <FaSearch color="white" />
               </Button>
             </Form>
           </Offcanvas.Body>

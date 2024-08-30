@@ -1,24 +1,67 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import { FaSmile } from "react-icons/fa";
 import "../App.css";
 
-function Home() {
+const API_KEY = "f4d190637bc5aa1f90848f2eabab1eab";
+
+function Home({ city }) {
+  const [weatherData, setWeatherData] = useState(null);
+
+  useEffect(() => {
+    if (city) {
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},IT&appid=${API_KEY}`)
+        .then((response) => response.json())
+        .then((data) => setWeatherData(data));
+    }
+  }, [city]);
+
+  useEffect(() => {
+    if (weatherData && weatherData.main) {
+      const temperatureCelsius = Math.round(weatherData.main.temp - 273.15);
+      let backgroundImage;
+      if (temperatureCelsius > 30) {
+        backgroundImage =
+          "url('https://st.depositphotos.com/3008028/3749/i/450/depositphotos_37496285-stock-photo-shining-sun-at-clear-blue.jpg')";
+      } else if (temperatureCelsius > 20) {
+        backgroundImage =
+          "url('https://img.freepik.com/foto-premium/il-cielo-e-blu-e-il-sole-splende_900396-14014.jpg')";
+      } else if (temperatureCelsius > 10) {
+        backgroundImage = "url('https://mantovauno.it/wp-content/uploads/2021/04/pioggia1.jpg')";
+      } else {
+        backgroundImage =
+          "url('https://www.unisr.it/mediaObject/unisr/imported/news-ricerca/uploads/2017/01/immagine-copertina/original/immagine-copertina.jpg')";
+      }
+      document.body.style.backgroundImage = backgroundImage;
+    }
+  }, [weatherData]);
+
+  if (!weatherData || !weatherData.weather || weatherData.weather.length === 0) {
+    return <div className="text-light fs-4 fw-bold">Spiacenti, siamo in un Meteo italiano</div>;
+  }
+
+  const weatherIconUrl = `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`;
+  const temperatureCelsius = Math.round(weatherData.main.temp - 273.15);
+
   return (
-    <div className="home-background">
-      <Container fluid className="text-white">
-        <Row>
-          <Col md={6}>
-            <p className="header-text">Some City</p>
-            <Card className="bg-transparent border-0" style={{ width: "18rem" }}>
-              <Card.Img variant="top" src="https://placedog.net/100/100" />
+    <div className="container-center">
+      <h1 className="text-center text-light fw-bold mt-5">
+        Guardiamo insieme il Meteo <FaSmile />
+      </h1>
+      <Container fluid className="text-white mt-5">
+        <Row className="align-items-center">
+          <Col md={6} className="d-flex flex-column align-items-center justify-content-center">
+            <h2>{weatherData.name}</h2>
+            <Card className="bg-transparent border-0 mt-4">
+              <Card.Img variant="" src={weatherIconUrl} alt="Weather icon" />
               <Card.Body>
-                <Card.Title className="text-white">Friday</Card.Title>
-                <Card.Text className="text-white">Today is Monday</Card.Text>
+                <Card.Title className="text-white">{weatherData.weather[0].main}</Card.Title>
+                <Card.Text className="text-white">{weatherData.weather[0].description}</Card.Text>
               </Card.Body>
             </Card>
           </Col>
-          <Col md={6} className="d-flex align-items-start justify-content-center">
-            <div className="temperature-display">+20°C</div>
+          <Col md={6} className="d-flex flex-column align-items-center justify-content-center">
+            <h2 className="mb-4">{`${temperatureCelsius}°C`}</h2>
           </Col>
         </Row>
       </Container>
