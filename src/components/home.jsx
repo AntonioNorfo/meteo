@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import { FaSmile } from "react-icons/fa";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "../App.css";
 
 const API_KEY = "f4d190637bc5aa1f90848f2eabab1eab";
@@ -54,6 +54,9 @@ function Home({ city }) {
               <Card.Body>
                 <Card.Title className="text-white">{weatherData.weather[0].main}</Card.Title>
                 <Card.Text className="text-white">{weatherData.weather[0].description}</Card.Text>
+                <Link to={`/details/${city}`}>
+                  <Button variant="primary">More Info</Button>
+                </Link>
               </Card.Body>
             </Card>
           </Col>
