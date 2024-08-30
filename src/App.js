@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavbarMeteo from "./components/myNav";
 import Home from "./components/home";
 import Details from "./components/details";
+import FooterCards from "./components/FooterCards";
 import "./App.css";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="/details/:city" element={<Details />} />
           </Routes>
         </div>
+        <FooterCards />
       </div>
     </Router>
   );

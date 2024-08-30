@@ -17,10 +17,6 @@ body {
   background-attachment: fixed;
 }
 
-.text-white {
-  color: white !important;
-}
-
 .bg-transparent {
   background-color: transparent !important;
 }
