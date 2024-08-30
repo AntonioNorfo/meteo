@@ -54,7 +54,9 @@ function NavbarMeteo({ onCityChange }) {
           />
           Meteo
         </Navbar.Brand>
-        <Navbar.Text className="mx-auto navbar-text rounded-border">{formatDateTime(dateTime)}</Navbar.Text>
+        <div className="navbar-center">
+          <Navbar.Text className="navbar-text rounded-border">{formatDateTime(dateTime)}</Navbar.Text>
+        </div>
         {!isDetailsPage && (
           <>
             <Navbar.Toggle aria-controls="offcanvasNavbar" />
