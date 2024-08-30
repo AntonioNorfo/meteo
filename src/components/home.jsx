@@ -45,15 +45,15 @@ function Home({ city }) {
 
   return (
     <div className="container-center">
-      <Container fluid className="text-white mt-5">
+      <Container fluid className=" mt-5">
         <Row className="align-items-center">
           <Col md={6} className="d-flex flex-column align-items-center justify-content-center  ">
             <Card className="bg-transparent  mt-4 border-0 ">
               <h2>{weatherData.name}</h2>
               <Card.Img className="img" variant="" src={weatherIconUrl} alt="Weather icon" />
               <Card.Body>
-                <Card.Title className="text-white">{weatherData.weather[0].main}</Card.Title>
-                <Card.Text className="text-white">{weatherData.weather[0].description}</Card.Text>
+                <Card.Title>{weatherData.weather[0].main}</Card.Title>
+                <Card.Text>{weatherData.weather[0].description}</Card.Text>
                 <Link to={`/details/${city}`}>
                   <Button variant="primary">More Info</Button>
                 </Link>
