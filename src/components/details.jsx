@@ -1,56 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBIcon, MDBRow, MDBTypography } from "mdb-react-ui-kit";
 
-export default function Basic() {
+const API_KEY = "f4d190637bc5aa1f90848f2eabab1eab";
+
+export default function Details() {
+  const { city } = useParams();
+  const [weatherData, setWeatherData] = useState(null);
+
+  useEffect(() => {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`)
+      .then((response) => response.json())
+      .then((data) => setWeatherData(data));
+  }, [city]);
+
+  if (!weatherData) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <section className="vh-100" style={{ backgroundColor: "#4B515D" }}>
-      <MDBContainer className="h-100">
-        <MDBRow className="justify-content-center align-items-center h-100">
-          <MDBCol md="8" lg="6" xl="4">
-            <MDBCard style={{ color: "#4B515D", borderRadius: "35px" }}>
-              <MDBCardBody className="p-4">
-                <div className="d-flex">
-                  <MDBTypography tag="h6" className="flex-grow-1">
-                    Warsaw
-                  </MDBTypography>
-                  <MDBTypography tag="h6">15:07</MDBTypography>
-                </div>
-
-                <div className="d-flex flex-column text-center mt-5 mb-4">
-                  <MDBTypography tag="h6" className="display-4 mb-0 font-weight-bold" style={{ color: "#1C2331" }}>
-                    {" "}
-                    13°C{" "}
-                  </MDBTypography>
-                  <span className="small" style={{ color: "#868B94" }}>
-                    Stormy
-                  </span>
-                </div>
-
-                <div className="d-flex align-items-center">
-                  <div className="flex-grow-1" style={{ fontSize: "1rem" }}>
-                    <div>
-                      <MDBIcon fas icon="wind fa-fw" style={{ color: "#868B94" }} />{" "}
-                      <span className="ms-1"> 40 km/h</span>
-                    </div>
-                    <div>
-                      <MDBIcon fas icon="tint fa-fw" style={{ color: "#868B94" }} /> <span className="ms-1"> 84% </span>
-                    </div>
-                    <div>
-                      <MDBIcon fas icon="sun fa-fw" style={{ color: "#868B94" }} /> <span className="ms-1"> 0.2h </span>
-                    </div>
-                  </div>
-                  <div>
-                    <img
-                      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-weather/ilu1.webp"
-                      width="100px"
-                    />
-                  </div>
-                </div>
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
-    </section>
+    <MDBContainer>
+      <MDBRow>
+        <MDBCol>
+          <MDBCard>
+            <MDBCardBody>
+              <MDBTypography tag="h5">{weatherData.name}</MDBTypography>
+              <div>
+                <MDBIcon fas icon="sun fa-fw" style={{ color: "#868B94" }} />{" "}
+                <span className="ms-1">{weatherData.weather[0].description}</span>
+              </div>
+              <div>
+                <img
+                  src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+                  alt="weather icon"
+                  width="100px"
+                />
+              </div>
+              <div>
+                <p>Temperature: {weatherData.main.temp}°C</p>
+                <p>Feels Like: {weatherData.main.feels_like}°C</p>
+                <p>Min Temperature: {weatherData.main.temp_min}°C</p>
+                <p>Max Temperature: {weatherData.main.temp_max}°C</p>
+                <p>Humidity: {weatherData.main.humidity}%</p>
+                <p>Wind Speed: {weatherData.wind.speed} m/s</p>
+              </div>
+            </MDBCardBody>
+          </MDBCard>
+        </MDBCol>
+      </MDBRow>
+    </MDBContainer>
   );
 }

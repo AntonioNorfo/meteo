@@ -57,28 +57,9 @@ body {
 .navbar-form input {
   flex: 1;
 }
-
-.autosuggest-container {
-  position: absolute;
-  z-index: 1000;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 100%;
-}
-
-.autosuggest-suggestion {
-  padding: 10px;
-  cursor: pointer;
-}
-
-.autosuggest-suggestion:hover {
-  background-color: #f0f0f0;
-}
+.img,
+.card-text,
 .card-title {
   font-size: 1.5rem;
-}
-
-.card-text {
-  font-size: 1.25rem;
+  cursor: pointer;
 }
