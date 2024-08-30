@@ -55,3 +55,31 @@
   margin-left: 10px;
   color: white;
 }
+.home-background {
+  background-image: url("https://placedog.net/1000/800");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-white {
+  color: white !important;
+}
+
+.bg-transparent {
+  background-color: transparent !important;
+}
+
+.temperature-display {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.header-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
