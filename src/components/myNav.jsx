@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import "../App.css";
 
 function NavbarMeteo({ onCityChange }) {
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState("Palermo");
   const [dateTime, setDateTime] = useState(new Date());
   const location = useLocation();
 
@@ -38,50 +38,37 @@ function NavbarMeteo({ onCityChange }) {
       minute: "2-digit",
       second: "2-digit",
     };
-    return date.toLocaleDateString("it-IT", options);
+    return new Intl.DateTimeFormat("en-US", options).format(date);
   };
 
   return (
-    <Navbar variant="dark" className="fixed-top">
-      <Container fluid>
-        <Navbar.Brand href="/">
-          <img
-            src="https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Weather-1024.png"
-            alt="Weather Icon"
-            width="50"
-            height="50"
-            className="d-inline-block align-top"
-          />
-          Meteo
-        </Navbar.Brand>
-        <div className="navbar-center">
-          <Navbar.Text className="navbar-text rounded-border">{formatDateTime(dateTime)}</Navbar.Text>
-        </div>
-        {!isDetailsPage && (
-          <>
-            <Navbar.Toggle aria-controls="offcanvasNavbar" />
-            <Navbar.Offcanvas id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" placement="end">
-              <Offcanvas.Header closeButton>
-                <Offcanvas.Title id="offcanvasNavbarLabel">Cerca città</Offcanvas.Title>
-              </Offcanvas.Header>
-              <Offcanvas.Body>
-                <Form className="d-flex ms-auto navbar-form" onSubmit={handleSearch}>
-                  <Form.Control
-                    type="search"
-                    placeholder="Cerca"
-                    className="me-2"
-                    aria-label="Search"
-                    value={city}
-                    onChange={handleCityChange}
-                  />
-                  <Button variant="outline-success" type="submit">
-                    <FaSearch color="white" />
-                  </Button>
-                </Form>
-              </Offcanvas.Body>
-            </Navbar.Offcanvas>
-          </>
-        )}
+    <Navbar bg="light" expand="md" className="navbar-meteo">
+      <Container>
+        <Navbar.Brand className="d-none d-md-block">Meteo App</Navbar.Brand>
+        <Navbar.Toggle aria-controls="offcanvasNavbar" />
+        <Navbar.Offcanvas id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" placement="end">
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title id="offcanvasNavbarLabel">Meteo App</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <Form className="d-flex" onSubmit={handleSearch}>
+              <Form.Control
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+                value={city}
+                onChange={handleCityChange}
+              />
+              <Button variant="outline-success" type="submit">
+                <FaSearch />
+              </Button>
+            </Form>
+            <div className="date-time-container d-none d-md-block">
+              <div>{formatDateTime(dateTime)}</div>
+            </div>
+          </Offcanvas.Body>
+        </Navbar.Offcanvas>
       </Container>
     </Navbar>
   );

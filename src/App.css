@@ -100,10 +100,16 @@ body {
   border-radius: 15px;
 }
 
+.date-time-container {
+  font-size: 1rem;
+  color: #333;
+}
+
 @media (max-width: 767.98px) {
   .footer-cards,
   .navbar-meteo .navbar-brand,
-  .navbar-meteo .offcanvas-body > :not(.d-flex) {
+  .navbar-meteo .offcanvas-body > :not(.d-flex),
+  .date-time-container {
     display: none;
   }
 }
