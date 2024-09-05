@@ -99,3 +99,11 @@ body {
   border: 1px solid black;
   border-radius: 15px;
 }
+
+@media (max-width: 767.98px) {
+  .footer-cards,
+  .navbar-meteo .navbar-brand,
+  .navbar-meteo .offcanvas-body > :not(.d-flex) {
+    display: none;
+  }
+}

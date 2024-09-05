@@ -19,7 +19,7 @@ function App() {
             <Route path="/details/:city" element={<Details />} />
           </Routes>
         </div>
-        <FooterCards />
+        <FooterCards className="d-none d-md-block" />
       </div>
     </Router>
   );

@@ -44,11 +44,11 @@ function Home({ city }) {
   const temperatureCelsius = Math.round(weatherData.main.temp - 273.15);
 
   return (
-    <div className="container-center">
-      <Container fluid className=" mt-5">
+    <div className="container-center mb-5">
+      <Container fluid>
         <Row className="align-items-center">
           <Col md={6} className="d-flex flex-column align-items-center justify-content-center  ">
-            <Card className="bg-transparent  mt-4 border-0 ">
+            <Card className="bg-transparent  border-0 ">
               <h2>{weatherData.name}</h2>
               <Card.Img className="img" variant="" src={weatherIconUrl} alt="Weather icon" />
               <Card.Body>
